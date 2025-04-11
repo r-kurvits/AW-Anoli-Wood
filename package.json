@@ -1,0 +1,10 @@
+{
+  "name": "sass-compiler",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node-sass --watch web/css -o web/css"
+  },
+  "author": "",
+  "license": "ISC"
+}
