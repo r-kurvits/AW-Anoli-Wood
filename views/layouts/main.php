@@ -5,8 +5,8 @@
 
 use app\widgets\Alert;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
+use yii\bootstrap5\Nav;
+use yii\bootstrap5\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
@@ -33,29 +33,56 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar navbar-expand-lg navbar-dark bg-dark',
         ],
     ]);
+    $baseItems = [
+        ['label' => 'Avaleht', 'url' => ['/']],
+        ['label' => 'Ettevõttest', 'url' => ['/about-us']],
+        ['label' => 'Tooted', 'url' => ['/products']],
+        ['label' => 'Kontakt', 'url' => ['/contact']],
+        ['label' => 'Galerii', 'url' => ['/gallery']],
+    ];
+    $userItems = Yii::$app->user->identity ? [
+        ['label' => 'Kasutajad', 'url' => ['/users']],
+        [
+            'label' => 'Logi välja ('. Yii::$app->user->identity->email .')', 
+            'url' => ['/management/logout'],
+            'linkOptions' => [
+                'data' => [
+                    'method' => 'post'
+                ]
+            ]
+        ]
+    ] : [];
+
+    $items = array_merge($baseItems, $userItems);
+
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => 'navbar-nav nav-item'],
+        'items' => $items
+    ]);
+    NavBar::end()
+    /*echo Nav::widget([
+        'options' => ['class' => 'navbar-nav nav-item'],
         'items' => [
-            ['label' => 'About Us', 'url' => ['/page/about-us']],
+            ['label' => 'Avaleht', 'url' => ['/']],
+            ['label' => 'Ettevõttest', 'url' => ['/about-us']],
+            ['label' => 'Tooted', 'url' => ['/products']],
+            ['label' => 'Kontakt', 'url' => ['/contact']],
+            ['label' => 'Galerii', 'url' => ['/gallery']],
 
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/default/login']]
+                ''
             ) : (
-                '<li>'
-                . Html::beginForm(['/default/logout'], 'post')
-                . Html::submitButton(
-                    '<i class="fas fa-sign-out-alt"></i>Logout (' . Yii::$app->user->identity->email . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
+                [
+                ['label' => 'Kasutajad', 'url' => ['/users']],
+                ['label' => 'Logi välja', 'url' => ['/management']]
+                ]
             )
         ],
     ]);
-    NavBar::end();
+    NavBar::end();*/
     ?>
 
     <div class="container">
@@ -69,20 +96,13 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <div class="footer-content-container">
-            <div class="paragraph">
-                <div>
-                    <a target="_blank" href="/page/terms-and-conditions">Terms & Conditions</a>
-                </div>
-                <div>
-                    <a target="_blank" href="/page/privacy-policy">Privacy Policy</a>
-                </div>
+        <div class="footer-content-container justify-content-center">
+            <div class="paragraph ">
+                <p>Männi, Vilimeeste küla, 69718 Viljandi vald, Viljandi maakond</p>
             </div>
             
-            <div class="paragraph"><?= Yii::powered() ?></div>
         </div>
     </div>
-    <div class="copyright-container">&copy; My Company <?= date('Y') ?></div>
 </footer>
 
 <?php $this->endBody() ?>

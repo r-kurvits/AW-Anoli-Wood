@@ -5,7 +5,7 @@
 /* @var $model caupohelvik\yii2rbac\models\LoginForm */
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 
 $this->title = 'Registration';
 ?>

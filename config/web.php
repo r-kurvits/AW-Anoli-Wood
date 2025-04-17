@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'name' => 'Project Name Here',
+    'name' => 'AW Anoli Wood',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -16,13 +16,13 @@ $config = [
         'Rbac' => [
             'class' => 'caupohelvik\yii2rbac\modules\Rbac',
         ],
-        'Pages' => [
-            'class' => 'caupohelvik\yii2pages\modules\Pages',
-        ],
+        //'Pages' => [
+        //    'class' => 'caupohelvik\yii2pages\modules\Pages',
+        //],
     ],
     'controllerMap' => [
-        'default' => 'caupohelvik\yii2rbac\modules\controllers\DefaultController',
-        'pages' => 'caupohelvik\yii2pages\modules\controllers\PagesController',
+        'management' => 'caupohelvik\yii2rbac\modules\controllers\DefaultController',
+        //'pages' => 'caupohelvik\yii2pages\modules\controllers\PagesController',
     ],
     'components' => [
         'request' => [
@@ -67,12 +67,12 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                [
+                /*[
                     'pattern' => '/',
                     'route' => 'pages/public-view',
                     'defaults' => ['slug' => 'homepage'],
                 ],
-                'page/<slug>' => 'pages/public-view',
+                'page/<slug>' => 'pages/public-view',*/
             ],
         ],
     ],
