@@ -30,10 +30,8 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-lg navbar-dark bg-dark',
+            'class' => 'navbar navbar-expand-lg navbar-dark bg-dark text-uppercase',
         ],
     ]);
     $baseItems = [
@@ -45,6 +43,7 @@ AppAsset::register($this);
     ];
     $userItems = Yii::$app->user->identity ? [
         ['label' => 'Kasutajad', 'url' => ['/users']],
+        ['label' => 'Kategooriad', 'url' => ['/categories']],
         [
             'label' => 'Logi välja ('. Yii::$app->user->identity->email .')', 
             'url' => ['/management/logout'],
@@ -57,11 +56,27 @@ AppAsset::register($this);
     ] : [];
 
     $items = array_merge($baseItems, $userItems);
-
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav nav-item'],
-        'items' => $items
-    ]);
+?>
+    <div class="container-fluid">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-3 d-flex align-items-center">
+                <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>"><?= Yii::$app->name ?></a>
+            </div>
+            <div class="col-md-6 d-flex justify-content-center">
+                <?php 
+                    echo Nav::widget([
+                        'options' => ['class' => 'navbar-nav nav-item'],
+                        'items' => $items,
+                    ]);
+                ?>
+            </div>
+            <div class="col-md-3 d-flex justify-content-end align-items-center">
+                <a class="nav-link" href="/cart"><i class="bi bi-cart fa-lg"></i></a>
+            </div>
+        </div>
+    </div>
+<?php
+    
     NavBar::end()
     /*echo Nav::widget([
         'options' => ['class' => 'navbar-nav nav-item'],
@@ -85,7 +100,7 @@ AppAsset::register($this);
     NavBar::end();*/
     ?>
 
-    <div class="container">
+    <div class="container-fluid">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

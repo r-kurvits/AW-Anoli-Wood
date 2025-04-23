@@ -21,7 +21,8 @@
         "caupohelvik/yii2-rbac": "dev-master",
         "caupohelvik/yii2-session-storage": "dev-master",
         "caupohelvik/yii2-utils": "dev-master",
-        "caupohelvik/yii2-pages": "dev-master"
+        "caupohelvik/yii2-pages": "dev-master",
+        "yiisoft/yii2-imagine": "^2.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

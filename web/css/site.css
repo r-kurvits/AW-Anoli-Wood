@@ -99,3 +99,11 @@ a.desc:after {
 .footer .copyright-container {
   text-align: center;
   padding: 20px 0; }
+
+.hero-section {
+    background-image: url("/files/images/hero.jpg");
+    height: 100vh;
+    color: white;
+    background-position: center center;
+    background-size: cover;
+}

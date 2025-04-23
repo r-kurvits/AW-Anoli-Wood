@@ -7,38 +7,31 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\CategoriesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Categories';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Kategooriad';
+$url = Yii::$app->params['url'];
 ?>
 <div class="categories-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Categories', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Lisa kategooriaid', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'name',
-            'position',
-            'img_path',
-            'img_extension',
-            //'created_by',
-            //'created_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
-    <?php Pjax::end(); ?>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <?php foreach ($categories as $category): ?>
+            <div class="col">
+                <div class="card h-100">
+                    <?= Html::img($url . 'files/categories/' . $category->id . "/" . $category->img_path . "." . $category->img_extension, ['alt' => $category->name]) ?>
+                    <div class="card-body">
+                        <div class="card-title">
+                            <?= mb_strtoupper(Html::encode($category->name)) ?>
+                        </div>
+                        <?= Html::a('Muuda', ['update', 'id' => $category->id], ['class' => 'btn btn-outline-primary btn-sm']) ?>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
 </div>

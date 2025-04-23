@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\VarDumper;
+use app\helpers\ImageHelper;
 
 /**
  * This is the model class for table "categories".
@@ -10,6 +12,10 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property int $position
+ * @property string|null $img_path
+ * @property string|null $img_extension
+ * @property int $created_by
+ * @property string $created_at
  */
 class Categories extends \yii\db\ActiveRecord
 {
@@ -24,12 +30,17 @@ class Categories extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+    public $imageFile;
+
     public function rules()
     {
         return [
             [['name', 'position'], 'required'],
             [['position'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'img_path'], 'string', 'max' => 255],
+            [['img_extension'], 'string', 'max' => 8],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg']
         ];
     }
 
@@ -40,9 +51,66 @@ class Categories extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'position' => 'Position',
+            'name' => 'Nimetus',
+            'position' => 'Järjekord',
         ];
+    }
+
+    private function getHash() {
+        if($this->img_path) return $this->img_path;
+
+        return Yii::$app->security->generateRandomString(16);
+    }
+
+    public function upload() {
+        Yii::trace(VarDumper::dumpAsString($this->imageFile));
+        if(!$this->imageFile) {
+            Yii::trace(VarDumper::dumpAsString("Image was not given"));
+            return false;
+        }
+
+        $hash = $this->getHash();
+        $extension = pathinfo($this->imageFile->name, PATHINFO_EXTENSION);
+
+        if($extension == "jpeg") {
+            $extension = "jpg";
+        }
+
+        list($width, $height, $type, $attr) = getimagesize($this->imageFile->tempName);
+        if(!ImageHelper::CheckImage($this->imageFile, $width, $height)) {
+            return;
+        }
+        if($this->img_path != $hash) {
+            $this->img_path = $hash;
+            Yii::$app->db->createCommand()->update('categories', ['img_path' => $hash], ["id" => $this->id])->execute();
+        }
+
+        Yii::$app->db->createCommand()->update('categories', ['img_extension' => $extension], ["id" => $this->id])->execute();
+        $imageFolder = $this->getImagesDirectory();
+        if(!file_exists($imageFolder)) {
+            mkdir($imageFolder, 0777);
+        }
+
+        $path = $imageFolder."/".$hash."." .$extension;
+
+        move_uploaded_file($this->imageFile->tempName, $path);
+
+        ImageHelper::Resize($width, $height, $path);
+
+        return true;
+    }
+
+    public function getImagesDirectory() {
+        $dir = self::getImagesDir();
+        return "$dir/$this->id";
+    }
+
+    public static function getImagesDir() {
+        $dir = Yii::getAlias('@webroot');
+        if (!file_exists("$dir/files/categories")) {
+            mkdir("$dir/files/categories", 0777, true);
+        }
+        return "$dir/files/categories";
     }
 
     public function beforeSave($insert) {
@@ -52,6 +120,16 @@ class Categories extends \yii\db\ActiveRecord
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->upload();
+
+        if (parent::afterSave($insert, $changedAttributes)) {
+            return true;
+        }
+        return false;
     }
 
     /**

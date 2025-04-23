@@ -4,10 +4,11 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Categories;
-use app\models\CategoriesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use app\models\ActionList;
 
 /**
  * CategoriesController implements the CRUD actions for Categories model.
@@ -35,12 +36,13 @@ class CategoriesController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CategoriesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $categories = Categories::find()->orderBy('position')->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'categories' => $categories
         ]);
     }
 
@@ -64,6 +66,9 @@ class CategoriesController extends Controller
      */
     public function actionCreate()
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = new Categories();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -84,10 +89,20 @@ class CategoriesController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        
+        if ($this->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -104,6 +119,9 @@ class CategoriesController extends Controller
      */
     public function actionDelete($id)
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
