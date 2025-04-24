@@ -31,7 +31,7 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'options' => [
-            'class' => 'navbar navbar-expand-lg navbar-light bg-light text-uppercase fw-bold text-dark',
+            'class' => 'navbar navbar-expand-lg navbar-light bg-light text-uppercase fw-bold text-dark fixed-top',
         ],
     ]);
     $baseItems = [

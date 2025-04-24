@@ -10,13 +10,14 @@ use yii\widgets\Pjax;
 $this->title = 'Kategooriad';
 $url = Yii::$app->params['url'];
 ?>
-<div class="categories-index">
+<div class="categories-index py-5">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Lisa kategooriaid', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <div>
+            <?= !Yii::$app->user->isGuest ? Html::a('<i class="bi bi-plus-square me-2"></i> Lisa kategooriaid', ['create'], ['class' => 'btn btn-success btn-sm']): "" ?>
+        </div>
+    </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <?php foreach ($categories as $category): ?>

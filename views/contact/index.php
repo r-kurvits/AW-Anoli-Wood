@@ -10,7 +10,7 @@ use yii\captcha\Captcha;
 
 $this->title = 'Kontakt';
 ?>
-<div class="site-contact">
+<div class="contact py-5">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>

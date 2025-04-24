@@ -8,10 +8,13 @@ $this->title = 'Meist - Anoli Wood';
 
 <div class="about-us py-5">
     <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Meist</h1>
+        </div>
         <div class="row">
             <div class="col-lg-6">
                 <h1 class="mb-4">Kvaliteet ja kogemus puidutööstuses</h1>
-                <p class="lead mb-4">AW Anoli Wood on teie usaldusväärne partner kvaliteetse saematerjali alal. Oleme pühendunud pakkuma esmaklassilist puitu, mis vastab ka kõige nõudlikumatele standarditele. Meie 15-aastane kogemus antud valdkonnas tagab teile asjatundliku teeninduse ja tooted, millele võite kindel olla.</p>
+                <p class="lead mb-4">Anoli Wood on teie usaldusväärne partner kvaliteetse saematerjali alal. Oleme pühendunud pakkuma esmaklassilist puitu, mis vastab ka kõige nõudlikumatele standarditele. Meie 15-aastane kogemus antud valdkonnas tagab teile asjatundliku teeninduse ja tooted, millele võite kindel olla.</p>
 
                 <h2 class="mb-3">Meie lugu</h2>
                 <p>Anoli Wood sai alguse 2010 visioonist tuua turule saematerjal, mis ühendab endas traditsioonilised väärtused ja kaasaegsed tootmisvõtted. Aastate jooksul oleme kasvanud ja arenenud, kuid meie põhimõtted on jäänud samaks: kompromissitu kvaliteet, jätkusuutlikkus ja klientide rahulolu.</p>

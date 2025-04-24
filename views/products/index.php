@@ -14,7 +14,7 @@ $this->title = 'Tooted';
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1><?= Html::encode($this->title) ?></h1>
             <div>
-                <?= Html::a('<i class="bi bi-plus-square me-2"></i> Lisa tooteid', ['create'], ['class' => 'btn btn-success btn-sm']) ?>
+                <?= !Yii::$app->user->isGuest ? Html::a('<i class="bi bi-plus-square me-2"></i> Lisa tooteid', ['create'], ['class' => 'btn btn-success btn-sm']): "" ?>
             </div>
         </div>
 
