@@ -101,7 +101,7 @@ a.desc:after {
   padding: 20px 0; }
 
 .hero-section {
-  width: 100vw;
+  width: 99.7vw;
   height: 900px;
   margin-top: -28px;
   margin-left: calc(-50vw + 50%);
@@ -168,6 +168,31 @@ a.desc:after {
 .navbar-nav a:hover {
   color: #006b05;
   text-decoration: none;
+}
+
+.contact-icon {
+  color: green;
+  font-size: 1.5rem;
+}
+
+.form-group button {
+  background-color: #616161;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+.form-group button:hover {
+  background-color: #006b05;
+  text-decoration: none;
+  color: #fff;
+}
+
+.form-label {
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {

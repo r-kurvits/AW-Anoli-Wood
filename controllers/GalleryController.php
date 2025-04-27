@@ -4,10 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\web\Response;
-use app\models\Categories;
 
-class SiteController extends Controller
+class GalleryController extends Controller
 {
 
     /**
@@ -29,10 +27,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $categories = Categories::find()->orderBy('position')->limit(4)->all();
-
-        return $this->render('index', [
-            'categories' => $categories
-        ]);
+        return $this->render('index');
     }
 }

@@ -36,36 +36,17 @@ $this->title = 'Anoli Wood';
         <h2>Meie tootevalik</h2>
         <p class="lead mb-4">Tutvu meie laia valikuga kvaliteetset saematerjali erinevateks kasutusotstarveteks.</p>
         <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="card shadow">
-                    <img src="<?= Yii::$app->request->baseUrl ?>/images/product1.jpg" class="card-img-top" alt="Saematerjal 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Impregneritud puit</h5>
-                        <p class="card-text">Vastupidav ja ilmastikukindel saematerjal välitingimustesse.</p>
-                        <a href="<?= \yii\helpers\Url::to(['/products']) ?>" class="btn">Vaata lähemalt</a>
+            <?php foreach($categories as $category): ?>
+                <div class="col-lg-3 mb-3">
+                    <div class="card shadow">
+                        <img src="<?= Yii::$app->request->baseUrl ?>/files/categories/<?= $category->id ?>/<?= $category->img_path ?>.<?= $category->img_extension ?>" class="card-img-top" alt="Saematerjal 1">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $category->name ?></h5>
+                            <!--p class="card-text">Vastupidav ja ilmastikukindel saematerjal välitingimustesse.</p-->
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card shadow">
-                    <img src="<?= Yii::$app->request->baseUrl ?>/images/product2.jpg" class="card-img-top" alt="Saematerjal 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Konstruktsioonipuit</h5>
-                        <p class="card-text">Kvaliteetne ja tugev puit ehituskonstruktsioonide jaoks.</p>
-                        <a href="<?= \yii\helpers\Url::to(['/products']) ?>" class="btn">Vaata lähemalt</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card shadow">
-                    <img src="<?= Yii::$app->request->baseUrl ?>/images/product3.jpg" class="card-img-top" alt="Saematerjal 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Voodrilaud</h5>
-                        <p class="card-text">Kaunis ja vastupidav voodrilaud teie kodu või hoone jaoks.</p>
-                        <a href="<?= \yii\helpers\Url::to(['/products']) ?>" class="btn">Vaata lähemalt</a>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
         <a href="<?= \yii\helpers\Url::to(['/products']) ?>" class="btn">Kogu tootevalik</a>
     </div>

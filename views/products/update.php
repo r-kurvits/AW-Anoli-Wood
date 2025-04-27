@@ -5,12 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Products */
 
-$this->title = 'Update Products: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Uudenda toodet: ' . $model->name;
 ?>
-<div class="products-update">
+<div class="products-update py-5">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

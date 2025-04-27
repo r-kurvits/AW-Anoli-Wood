@@ -5,11 +5,12 @@ namespace app\controllers;
 use app\models\Categories;
 use Yii;
 use app\models\Products;
-use app\models\ProductsSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
+use yii\widgets\ActiveForm;
+use app\models\ProductLines;
 
 /**
  * ProductsController implements the CRUD actions for Products model.
@@ -37,8 +38,6 @@ class ProductsController extends Controller
      */
     public function actionIndex()
     {
-        //$searchModel = new ProductsSearch();
-        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $categories = Categories::find()->orderBy('position')->all();
         $products = [];
 
@@ -61,8 +60,14 @@ class ProductsController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        $productLinesDataProvider = new ActiveDataProvider([
+            "query" => ProductLines::find()->where(["=", 'product_id', $id])
+        ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'productLinesDataProvider' => $productLinesDataProvider
         ]);
     }
 
@@ -74,8 +79,7 @@ class ProductsController extends Controller
     public function actionCreate()
     {
         $model = new Products();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->SaveBundle()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -95,10 +99,10 @@ class ProductsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load(Yii::$app->request->post()) && $model->SaveBundle()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
+        $model->loadProductLines();
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -118,6 +122,15 @@ class ProductsController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionGetProductLinesForm($inputIndex) {
+        $model = new Products();
+        return $this->renderPartial('/product-lines/_form', [
+            'model' => $model,
+            'form' => ActiveForm::begin(),
+            'index' => $inputIndex
+        ]);
+    }
+
     /**
      * Finds the Products model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -127,9 +140,17 @@ class ProductsController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Products::findOne($id)) !== null) {
+        $model = Products::find()
+            ->where(['products.id' => $id])
+            ->joinWith(["productLines"])
+            ->one();
+
+        if ($model !== null) {
             return $model;
         }
+        /*if (($model = Products::findOne($id)) !== null) {
+            return $model;
+        }*/
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }

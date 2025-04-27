@@ -2,12 +2,12 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Products */
+/** @var yii\web\View $this */
+/** @var app\models\ProductLines $model */
 
-$this->title = 'Lisa tooteid';
+$this->title = "Lisa toote mõõtusid";
 ?>
-<div class="products-create py-5">
+<div class="product-lines-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

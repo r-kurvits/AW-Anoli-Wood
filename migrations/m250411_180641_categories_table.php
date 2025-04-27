@@ -26,6 +26,62 @@ class m250411_180641_categories_table extends Migration
         );
 
         $this->createIndex('idx-categories-created_by', 'categories', 'created_by');
+
+        $this->insert($this->tableName, [
+            'name' => 'Saematerjal',
+            'position' => 1,
+            'img_path' => "",
+            'img_extension' => "",
+            'created_by' => 1,
+        ]);
+
+        $this->insert($this->tableName, [
+            'name' => 'Höövelmaterjal',
+            'position' => 2,
+            'img_path' => "",
+            'img_extension' => "",
+            'created_by' => 1,
+        ]);
+
+        $this->insert($this->tableName, [
+            'name' => 'Sisevoodrilaud',
+            'position' => 3,
+            'img_path' => "",
+            'img_extension' => "",
+            'created_by' => 1,
+        ]);
+
+        $this->insert($this->tableName, [
+            'name' => 'Välisvoodrilaud',
+            'position' => 4,
+            'img_path' => "",
+            'img_extension' => "",
+            'created_by' => 1,
+        ]);
+
+        $this->insert($this->tableName, [
+            'name' => 'Terassilaud',
+            'position' => 5,
+            'img_path' => "",
+            'img_extension' => "",
+            'created_by' => 1,
+        ]);
+
+        $this->insert($this->tableName, [
+            'name' => 'Immutatud puit',
+            'position' => 6,
+            'img_path' => "",
+            'img_extension' => "",
+            'created_by' => 1,
+        ]);
+
+        $this->insert($this->tableName, [
+            'name' => 'Termotöödeldud puit',
+            'position' => 7,
+            'img_path' => "",
+            'img_extension' => "",
+            'created_by' => 1,
+        ]);
     }
 
     /**

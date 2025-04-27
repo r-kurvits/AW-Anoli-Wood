@@ -31,13 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'category_id',
-            'img_path',
-            'img_extension',
-            'width',
-            'thickness',
-            'wood_type',
-            'price',
         ],
     ]) ?>
+
+    <?php if($model->productLines): ?>
+        <h2>Toote mõõdud</h2>
+        <?= $this->render('/product-lines/index', [
+            'dataProvider' => $productLinesDataProvider,
+            'product_id' => $model->id
+        ]) ?>
+    <?php endif; ?>
 
 </div>
