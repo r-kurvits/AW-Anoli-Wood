@@ -28,12 +28,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'width') ?>
 
-    <?php // echo $form->field($model, 'thickness') ?>
-
-    <?php // echo $form->field($model, 'wood_type') ?>
-
-    <?php // echo $form->field($model, 'price') ?>
-
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
