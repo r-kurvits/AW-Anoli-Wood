@@ -16,18 +16,22 @@ $config = [
         'Rbac' => [
             'class' => 'caupohelvik\yii2rbac\modules\Rbac',
         ],
-        //'Pages' => [
-        //    'class' => 'caupohelvik\yii2pages\modules\Pages',
-        //],
     ],
     'controllerMap' => [
         'management' => 'caupohelvik\yii2rbac\modules\controllers\DefaultController',
-        //'pages' => 'caupohelvik\yii2pages\modules\controllers\PagesController',
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Fd3Zx7jCrLd9uhzzIheK7ooS2rKKjiPl',
+        ],
+        'response' => [
+            'on beforeSend' => function ($event) {
+                $event->sender->headers->add('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+            },
+        ],
+        'cartService' => [
+            'class' => 'app\components\CartService',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -47,11 +51,8 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'class' => 'yii\symfonymailer\Mailer',
+            'useFileTransport' => YII_ENV_DEV ? true : false,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -62,17 +63,17 @@ $config = [
                 ],
             ],
         ],
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn' => 'mongodb://aw-anoli-wood:sCoWurephOmenAly@localhost:27017/aw-anoli-wood',
+        ],
         'db' => $db,
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                /*[
-                    'pattern' => '/',
-                    'route' => 'pages/public-view',
-                    'defaults' => ['slug' => 'homepage'],
-                ],
-                'page/<slug>' => 'pages/public-view',*/
+                'cart/add-to-cart' => 'cart/add-to-cart',
+                'cart/view-cart' => 'cart/view-cart'
             ],
         ],
     ],
@@ -85,7 +86,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*'],
     ];
 
     $config['bootstrap'][] = 'gii';

@@ -2,10 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\Gallery;
 use Yii;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 
-class GalleryController extends Controller
+class GalleryController extends BaseController
 {
 
     /**
@@ -27,6 +30,31 @@ class GalleryController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $images = Gallery::find()->all();
+
+        return $this->render('index', [
+            'images' => $images
+        ]);
+    }
+
+    public function actionCreate()
+    {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = new Gallery();
+        if ($this->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->imageFile = UploadedFile::getInstances($model, 'imageFile');
+                if ($model->upload()) {
+                    return $this->redirect(['index']);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 }

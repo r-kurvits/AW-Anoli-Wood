@@ -2,12 +2,11 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\web\Response;
+use app\controllers\BaseController;
 use app\models\Categories;
 
-class SiteController extends Controller
+
+class SiteController extends BaseController
 {
 
     /**

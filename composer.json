@@ -17,12 +17,16 @@
         "php": ">=5.6.0",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap5": "^2.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "caupohelvik/yii2-rbac": "dev-master",
         "caupohelvik/yii2-session-storage": "dev-master",
         "caupohelvik/yii2-utils": "dev-master",
         "caupohelvik/yii2-pages": "dev-master",
-        "yiisoft/yii2-imagine": "^2.3"
+        "yiisoft/yii2-imagine": "^2.3",
+        "yiisoft/yii2-mongodb": "^3.0",
+        "symfony/mailer": "^6.4",
+        "symfony/http-client": "^6.4",
+        "newerton/yii2-fancybox-3": "*",
+        "kartik-v/yii2-mpdf": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -45,7 +49,8 @@
 
         },
         "allow-plugins": {
-            "yiisoft/yii2-composer": true
+            "yiisoft/yii2-composer": true,
+            "robloach/component-installer": true
         }
     },
     "scripts": {

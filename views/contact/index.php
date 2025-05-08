@@ -47,7 +47,7 @@ $this->title = 'Kontakt - Anoli Wood';
                 <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
 
                     <div class="alert alert-success">
-                        Aitäh ühenduse võtmise eest! Vastame teile esimesel võimalusel.
+                        Aitäh, et võtsite meiega ühendust! Vastame teile esimesel võimalusel.
                     </div>
 
                 <?php else: ?>

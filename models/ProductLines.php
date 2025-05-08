@@ -12,6 +12,7 @@ use caupohelvik\yii2rbac\models\User;
  * @property int $id
  * @property int $product_id
  * @property string $width
+ * @property string $length
  * @property string $thickness
  * @property string $wood_type
  * @property float $price
@@ -41,7 +42,7 @@ class ProductLines extends \yii\db\ActiveRecord
             [['price'], 'number'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['created_at'], 'safe'],
-            [['width', 'thickness', 'wood_type'], 'string', 'max' => 255],
+            [['width', 'thickness', 'wood_type', 'length'], 'string', 'max' => 255],
             [['price_type'], 'string', 'max' => 32],
             [['img_path'], 'string', 'max' => 255],
             [['img_extension'], 'string', 'max' => 8],
@@ -58,6 +59,7 @@ class ProductLines extends \yii\db\ActiveRecord
             'id' => 'ID',
             'product_id' => 'Toode',
             'width' => 'Laius',
+            'length' => 'Pikkus',
             'thickness' => 'Paksus',
             'woodType' => 'Materjali tüüp',
             'price' => 'Hind',
@@ -69,7 +71,7 @@ class ProductLines extends \yii\db\ActiveRecord
 
     public function getProduct()
     {
-        return $this->hasOne(Products::class, ['id' => 'show_id']);
+        return $this->hasOne(Products::class, ['id' => 'product_id']);
     }
 
     /**

@@ -40,7 +40,7 @@ class Categories extends \yii\db\ActiveRecord
             [['position'], 'integer'],
             [['name', 'img_path'], 'string', 'max' => 255],
             [['img_extension'], 'string', 'max' => 8],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg']
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'wrongExtension' => 'Lubatud failitüübid on: png, jpg, jpeg']
         ];
     }
 
@@ -63,32 +63,28 @@ class Categories extends \yii\db\ActiveRecord
     }
 
     public function upload() {
-        Yii::trace(VarDumper::dumpAsString($this->imageFile));
         if(!$this->imageFile) {
             Yii::trace(VarDumper::dumpAsString("Image was not given"));
             return false;
         }
-
         $hash = $this->getHash();
         $extension = pathinfo($this->imageFile->name, PATHINFO_EXTENSION);
 
-        if($extension == "jpeg") {
-            $extension = "jpg";
-        }
-
-        list($width, $height, $type, $attr) = getimagesize($this->imageFile->tempName);
+        list($width, $height) = getimagesize($this->imageFile->tempName);
         if(!ImageHelper::CheckImage($this->imageFile, $width, $height)) {
             return;
+        }
+        if ($this->img_path) {
+            $this->deleteImage();
         }
         if($this->img_path != $hash) {
             $this->img_path = $hash;
             Yii::$app->db->createCommand()->update('categories', ['img_path' => $hash], ["id" => $this->id])->execute();
         }
-
         Yii::$app->db->createCommand()->update('categories', ['img_extension' => $extension], ["id" => $this->id])->execute();
         $imageFolder = $this->getImagesDirectory();
         if(!file_exists($imageFolder)) {
-            mkdir($imageFolder, 0777);
+            mkdir($imageFolder, 0755);
         }
 
         $path = $imageFolder."/".$hash."." .$extension;
@@ -108,9 +104,28 @@ class Categories extends \yii\db\ActiveRecord
     public static function getImagesDir() {
         $dir = Yii::getAlias('@webroot');
         if (!file_exists("$dir/files/categories")) {
-            mkdir("$dir/files/categories", 0777, true);
+            mkdir("$dir/files/categories", 0755, true);
         }
         return "$dir/files/categories";
+    }
+
+    public function deleteImage() {
+        $dir = $this->getImagesDirectory();
+        $file = "$dir/$this->img_path.$this->img_extension";
+        if (!empty($this->img_path) && !empty($this->img_extension)) {
+            if (file_exists($file)) {
+                if (unlink($file)) {
+                    return true;
+                } else {
+                    Yii::error("Failed to unlink image");
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
     }
 
     public function beforeSave($insert) {

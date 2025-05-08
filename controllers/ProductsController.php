@@ -11,11 +11,14 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use app\models\ProductLines;
+use yii\helpers\Html;
+use yii\web\UploadedFile;
+use yii\helpers\VarDumper;
 
 /**
  * ProductsController implements the CRUD actions for Products model.
  */
-class ProductsController extends Controller
+class ProductsController extends BaseController
 {
     /**
      * {@inheritdoc}
@@ -60,6 +63,9 @@ class ProductsController extends Controller
      */
     public function actionView($id)
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = $this->findModel($id);
 
         $productLinesDataProvider = new ActiveDataProvider([
@@ -78,9 +84,20 @@ class ProductsController extends Controller
      */
     public function actionCreate()
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = new Products();
-        if ($model->load(Yii::$app->request->post()) && $model->SaveBundle()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->imageFile = UploadedFile::getInstances($model, "imageFile");
+
+                if ($model->SaveBundle()) {
+                    return $this->redirect(['index']);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -97,10 +114,21 @@ class ProductsController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load(Yii::$app->request->post()) && $model->SaveBundle()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $productLines = $model->productLines;
+        if ($this->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->imageFile = UploadedFile::getInstances($model, "imageFile");
+                
+                if ($model->SaveBundle()) {
+                    return $this->redirect(['index']);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
         }
         $model->loadProductLines();
         return $this->render('update', [
@@ -117,17 +145,49 @@ class ProductsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = $this->findModel($id);
+        $dirname = "files/products/$id";
+        if ($dirname) {
+            array_map('unlink', glob("$dirname/*.*"));
+            if (file_exists($dirname)) {
+                rmdir($dirname);
+            }
+        }
+        
+        $model->delete();
 
         return $this->redirect(['index']);
     }
 
-    public function actionGetProductLinesForm($inputIndex) {
-        $model = new Products();
+    public function actionDeleteProductLine($productLineId) {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = ProductLines::findOne($productLineId);
+        if (!empty($model->img_path) && !empty($model->img_extension)) {
+            $filename = "files/products/$model->product_id/$model->img_path.$model->img_extension";
+            if ($filename) {
+                unlink($filename);
+            }
+        }
+        $model->delete();
+        return $this->redirect(['index']);
+    }
+
+    public function actionGetProductLinesForm($id, $inputIndex) {
+        if ($id) {
+            $model = Products::findOne($id);
+        } else {
+            $model = new Products();
+        }
+        
         return $this->renderPartial('/product-lines/_form', [
             'model' => $model,
             'form' => ActiveForm::begin(),
-            'index' => $inputIndex
+            'index' => $inputIndex,
         ]);
     }
 

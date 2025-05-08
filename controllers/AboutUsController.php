@@ -2,10 +2,8 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\web\Controller;
 
-class AboutUsController extends Controller
+class AboutUsController extends BaseController
 {
 
     /**
@@ -21,7 +19,7 @@ class AboutUsController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays about us page.
      *
      * @return string
      */

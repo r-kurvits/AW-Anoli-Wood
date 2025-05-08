@@ -8,12 +8,12 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-use app\models\ActionList;
+use yii\helpers\VarDumper;
 
 /**
  * CategoriesController implements the CRUD actions for Categories model.
  */
-class CategoriesController extends Controller
+class CategoriesController extends BaseController
 {
     /**
      * {@inheritdoc}
@@ -54,6 +54,9 @@ class CategoriesController extends Controller
      */
     public function actionView($id)
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -70,11 +73,16 @@ class CategoriesController extends Controller
             return $this->goHome();
         }
         $model = new Categories();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                if ($model->save()) {
+                    return $this->redirect(['index']);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -98,7 +106,7 @@ class CategoriesController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['index']);
                 }
             }
         } else {
@@ -122,7 +130,9 @@ class CategoriesController extends Controller
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->deleteImage();
+        $model->delete();
 
         return $this->redirect(['index']);
     }

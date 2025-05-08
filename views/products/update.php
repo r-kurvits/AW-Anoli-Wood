@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Products */
 
-$this->title = 'Uudenda toodet: ' . $model->name;
+$this->title = 'Uudenda toodet: ' . Html::encode($model->name);
 ?>
 <div class="products-update py-5">
 

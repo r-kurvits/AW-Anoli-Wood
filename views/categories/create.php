@@ -5,11 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Categories */
 
-$this->title = 'Create Categories';
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Lisa kategooria';
 ?>
-<div class="categories-create">
+<div class="categories-create py-5">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

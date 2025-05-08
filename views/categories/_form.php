@@ -16,7 +16,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'position')->textInput() ?>
 
-    <?= $form->field($model, 'imageFile')->fileInput() ?>
+    <div class="form-group py-3">
+        <h6>Kategooria pilt</h6>
+        <div class="custom-file-upload">
+            <input type="file" id="imageFile" name="<?= Html::getInputName($model, 'imageFile') ?>" class="visually-hidden">
+            <label for="imageFile" class="file-upload-button">Vali fail</label>
+            <span class="file-upload-filename"></span>
+        </div>
+        <?php if ($model->hasErrors('imageFile')): ?>
+            <div class="invalid-feedback"><?= Html::error($model, 'imageFile') ?></div>
+        <?php endif; ?>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Salvesta', ['class' => 'btn btn-success']) ?>
@@ -25,3 +35,10 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<script>
+    document.getElementById('imageFile').addEventListener('change', function() {
+        var filename = this.value.split("\\").pop();
+        document.querySelector('.file-upload-filename').textContent = filename.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    });
+</script>

@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Muuda kategooriat: ' . $model->name;
 ?>
-<div class="categories-update">
+<div class="categories-update py-5">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

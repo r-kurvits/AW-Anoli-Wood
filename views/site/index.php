@@ -18,14 +18,18 @@ $this->title = 'Anoli Wood';
 <section id="about" class="py-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <h2>Meist</h2>
-                <p>Anoli Wood on pühendunud kvaliteetse saematerjali tootmisele juba 15 aastat. Meie kogemus ja teadmised tagavad, et meie tooted vastavad ka kõige kõrgematele standarditele. Kasutame parimat toorainet ja kaasaegseid tehnoloogiaid, et pakkuda teile esmaklassilist saematerjali.</p>
-                <p>Oleme uhked oma pikaajalise kogemuse üle puidutööstuses ning meie eesmärk on jätkuvalt pakkuda klientidele parimat võimalikku teenust ja tooteid.</p>
-                <a href="<?= \yii\helpers\Url::to(['/about-us']) ?>" class="btn">Loe rohkem meist</a>
+            <div class="col-md-6 order-md-last">
+                <img src="files/images/about-us.jpg" alt="Meist" class="img-fluid rounded shadow">
             </div>
             <div class="col-md-6">
-                <img src="files/images/about-us.jpg" alt="Meist" class="img-fluid rounded shadow">
+                <h2>Meist</h2>
+                <p>Anoli Wood on pühendunud kvaliteetse saematerjali tootmisele juba 15 aastat.
+                    Meie kogemus ja teadmised tagavad, et meie tooted vastavad ka kõige kõrgematele standarditele.
+                    Kasutame parimat toorainet ja kaasaegseid tehnoloogiaid, et pakkuda teile esmaklassilist saematerjali.
+                </p>
+                <p>Oleme uhked oma pikaajalise kogemuse üle puidutööstuses ning meie eesmärk on
+                    jätkuvalt pakkuda klientidele parimat võimalikku teenust ja tooteid.</p>
+                <a href="<?= \yii\helpers\Url::to(['/about-us']) ?>" class="btn">Loe rohkem meist</a>
             </div>
         </div>
     </div>
@@ -42,7 +46,6 @@ $this->title = 'Anoli Wood';
                         <img src="<?= Yii::$app->request->baseUrl ?>/files/categories/<?= $category->id ?>/<?= $category->img_path ?>.<?= $category->img_extension ?>" class="card-img-top" alt="Saematerjal 1">
                         <div class="card-body">
                             <h5 class="card-title"><?= $category->name ?></h5>
-                            <!--p class="card-text">Vastupidav ja ilmastikukindel saematerjal välitingimustesse.</p-->
                         </div>
                     </div>
                 </div>

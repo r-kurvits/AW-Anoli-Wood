@@ -17,6 +17,7 @@ class m250426_165954_add_product_lines_table extends Migration
                 'id' => Schema::TYPE_PK,
                 'product_id' => $this->integer()->notNull(),
                 'width' => $this->string(255)->notNull(),
+                'length' => $this->string(255)->notNull(),
                 'thickness' => $this->string(255)->notNull(),
                 'wood_type' => $this->string(255)->notNull(),
                 'price' => $this->float()->notNull(),

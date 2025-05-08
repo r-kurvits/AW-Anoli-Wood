@@ -29,8 +29,8 @@ $this->title = 'Meist - Anoli Wood';
                 </ul>
             </div>
             <div class="col-lg-6">
-                <img src="files/images/about-us-1.jpg" alt="Meie meeskond" class="img-fluid rounded shadow-lg mb-4">
-                <img src="files/images/about-us-2.jpg" alt="Saematerjali tootmine" class="img-fluid rounded shadow-lg">
+                <img src="files/images/about-us-1.jpg" alt="Meist-1" class="img-fluid rounded shadow-lg mb-4">
+                <img src="files/images/about-us-2.jpg" alt="Meist-2" class="img-fluid rounded shadow-lg">
             </div>
         </div>
 
@@ -57,7 +57,7 @@ $this->title = 'Meist - Anoli Wood';
         <div class="row mt-5">
             <div class="col-md-12 text-center">
                 <p class="lead">Oleme valmis teid aitama teie puiduvajadustega. Võtke meiega ühendust juba täna!</p>
-                <?= Html::a('Võta ühendust', ['/contact'], ['class' => 'btn btn-primary btn-lg']) ?>
+                <?= Html::a('Võta ühendust', ['/contact'], ['class' => 'btn button']) ?>
             </div>
         </div>
     </div>

@@ -15,9 +15,12 @@ use yii\web\NotFoundHttpException;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     public function actionIndex() {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         if(!Yii::$app->user->identity->hasPermissionTo(ActionList::ACTION_ADMIN_USER)) {
             return $this->goHome();
         }
@@ -33,11 +36,12 @@ class UserController extends Controller
     }
 
     public function actionView($id) {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         if(!Yii::$app->user->identity->hasPermissionTo(ActionList::ACTION_ADMIN_USER)) {
             return $this->goHome();
         }
-
-        
 
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -48,6 +52,9 @@ class UserController extends Controller
      * @throws Exception
      */
     public function actionUpdate($id) {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         if(!Yii::$app->user->identity->hasPermissionTo(ActionList::ACTION_ADMIN_USER)) {
             return $this->goHome();
         }
@@ -75,6 +82,9 @@ class UserController extends Controller
     }
 
     public function actionDelete($id) {
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         if(!Yii::$app->user->identity->hasPermissionTo(ActionList::ACTION_ADMIN_USER)) {
             return $this->goHome();
         }
