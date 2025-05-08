@@ -23,10 +23,10 @@
         "caupohelvik/yii2-pages": "dev-master",
         "yiisoft/yii2-imagine": "^2.3",
         "yiisoft/yii2-mongodb": "^3.0",
-        "symfony/mailer": "^6.4",
         "symfony/http-client": "^6.4",
         "newerton/yii2-fancybox-3": "*",
-        "kartik-v/yii2-mpdf": "^1.0"
+        "kartik-v/yii2-mpdf": "^1.0",
+        "yiisoft/yii2-swiftmailer": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -113,7 +113,6 @@ class PurchaseOrdersController extends BaseController
         if (is_array($purchaseOrder)) {
             $purchaseOrderWithDetails = [
                 "offerName" => $purchaseOrder['offer_name'],
-                "email" => $purchaseOrder['email'],
                 "totalPrice" => $purchaseOrder['total_price'],
                 "createdAt" => $purchaseOrder['created_at'],
                 "items" => []

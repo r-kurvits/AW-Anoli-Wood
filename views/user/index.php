@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 
 $this->title = "Kasutajad";
 ?>
-<div class="users-index">
+<div class="users-index py-5">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -17,7 +17,6 @@ $this->title = "Kasutajad";
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'email',

@@ -10,11 +10,9 @@ use yii\widgets\DetailView;
 /* @var $modelForm app\models\UserPremiumForm */
 
 $this->title = $model->email;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="user-view">
+<div class="user-view py-5">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -37,33 +35,4 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at',
         ],
     ]) ?>
-
-    <h2>Preemiumid</h2>
-
-    <hr>
-    <h3>Lisa uus</h3>
-    <?php $form = ActiveForm::begin([
-            "action" => "/user/create-premium?userId=".$model->id,
-            "method" => "POST"
-    ]); ?>
-
-    <?= $form->field($modelForm, 'expiresAt')->textInput([
-            "type" => "date"
-    ]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
-    <hr>
-    <ol>
-        <?php foreach ($userPremiums as $premium): ?>
-            <li>
-                Makse ID: <?= $premium->payment_intent_id ?> <br>Aegub: <?= $premium->expires_at ?><br><br>
-            </li>
-        <?php endforeach; ?>
-    </ol>
-
 </div>

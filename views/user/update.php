@@ -13,8 +13,7 @@ use app\models\ActionList;
 $permissions = ActionList::getPermissions();
 $labels = ActionList::getLabels();
 ?>
-<div class="association-add-role">
-
+<div class="user-update py-5">
     <h1><?= Yii::t('app', 'Update user roles') ?>:<br/> <?= $name ?></h1>
     <?php $form = ActiveForm::begin(); ?>
         <div class="f-wrap">

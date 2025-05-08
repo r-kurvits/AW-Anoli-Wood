@@ -60,7 +60,7 @@ $cartQuantity = Yii::$app->cartService->getCartQuantity();
                         [
                             'label' => 'Admin',
                             'items' => [
-                                ['label' => 'Kasutajad', 'url' => ['/users']],
+                                ['label' => 'Kasutajad', 'url' => ['/user']],
                                 ['label' => 'Kategooriad', 'url' => ['/categories']],
                                 ['label' => 'Ostutellimused', 'url' => ['/purchase-orders']],
                                 [

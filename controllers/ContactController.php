@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\helpers\EmailHelper;
 use Yii;
 use app\models\ContactForm;
 use yii\helpers\VarDumper;
@@ -40,23 +41,14 @@ class ContactController extends BaseController
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post())) {
-            $transportDsn = 'smtp://localhost:25';
-            $transport = Transport::fromDsn($transportDsn);
-            $mailer = new Mailer($transport);
-
-            $email = (new Email())
-                ->from($model->email)
-                ->to(Yii::$app->params['adminEmail'])
-                ->subject($model->subject)
-                ->html(nl2br($model->body));
             try {
-                $mailer->send($email);
+                EmailHelper::SendMailFrom($model->email, Yii::$app->params['senderName'], $model->subject, $model->body);
                 Yii::$app->session->setFlash('contactFormSubmitted');
             } catch (\Throwable $e) {
-                Yii::error("Error sending email: " . $e->getMessage());
+                Yii::error("Error sending email: " . $e->getMessage(), __METHOD__);
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }
-
+    
             return $this->refresh();
         }
         return $this->render('index', [

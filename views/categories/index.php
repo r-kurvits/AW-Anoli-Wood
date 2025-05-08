@@ -8,7 +8,6 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Kategooriad - Anoli Wood';
-$url = Yii::$app->params['url'];
 ?>
 <div class="categories-index py-5">
 
