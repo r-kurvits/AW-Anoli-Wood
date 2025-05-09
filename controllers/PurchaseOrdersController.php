@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\models\ProductLines;
 use Yii;
-use yii\helpers\VarDumper;
 use kartik\mpdf\Pdf;
 use yii\web\Response;
 
@@ -99,7 +98,6 @@ class PurchaseOrdersController extends BaseController
                 ];
             }
         }
-        Yii::trace(VarDumper::dumpAsString($purchaseOrderWithDetails));
         
         return $this->render('view', [
             'purchaseOrder' => $purchaseOrderWithDetails
@@ -149,7 +147,12 @@ class PurchaseOrdersController extends BaseController
                 'SetHeader' => [],
             ]
         ]);
-        return $pdf->render();
+        try {
+            return $pdf->render();
+        } catch (\Throwable $e) {
+            ob_end_clean();
+            throw $e;
+        }
     }
 
     public function actionFinishOrder() 
@@ -164,5 +167,3 @@ class PurchaseOrdersController extends BaseController
         return ['success' => true, 'message' => 'Ostutellimus lõpetatud'];
     }
 }
-?>
-

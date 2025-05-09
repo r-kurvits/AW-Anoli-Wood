@@ -101,7 +101,7 @@ $this->title = 'Tooted - Anoli Wood';
                         }
                     }
                 } else {
-                    alert(response.message);
+                    alert("Viga toote ostukorvi lisamisel.");
                 }
             },
             error: function(xhr, status, error) {

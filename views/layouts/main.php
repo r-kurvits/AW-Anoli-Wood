@@ -9,7 +9,6 @@ use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use yii\bootstrap5\Dropdown;
 
 AppAsset::register($this);
 $cartQuantity = Yii::$app->cartService->getCartQuantity();

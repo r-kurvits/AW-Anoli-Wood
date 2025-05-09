@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\helpers\EmailHelper;
 use app\models\ProductLines;
 use Yii;
 use yii\helpers\VarDumper;
@@ -255,16 +256,8 @@ class CartController extends BaseController
             'created_at' => time(),
         ];
         $this->getOfferCollection()->insert($offerData);
-        $transportDsn = 'smtp://localhost:25';
-        $transport = Transport::fromDsn($transportDsn);
-        $mailer = new Mailer($transport);
-        $email = (new Email())
-            ->from($offerEmail)
-            ->to(Yii::$app->params['adminEmail'])
-            ->subject("Uus ostupäring")
-            ->html("Tehtud on uus ostupäring:". $offerName);
         try {
-            $mailer->send($email);
+            EmailHelper::SendMailFrom($offerEmail, Yii::$app->params['senderName'], "Saabunud on uus ostutellimus", $offerName);
         } catch (\Throwable $e) {
             Yii::error("Error sending email: " . $e->getMessage());
             Yii::$app->session->setFlash('error', 'There was an error sending your message.');
